@@ -1,11 +1,12 @@
+## Memory Usage Alert
 groups:
   - name: example
     rules:
-      - alert: HighCPUUsage
-        expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+      - alert: HighMemoryUsage
+        expr: node_memory_Active_bytes / node_memory_MemTotal_bytes * 100 > 80
         for: 5m
         labels:
-          severity: critical
+          severity: warning
         annotations:
-          summary: "Instance {{ $labels.instance }} high CPU usage"
-          description: "{{ $labels.instance }} has CPU usage above 80% for the last 5 minutes."
+          summary: "Instance {{ $labels.instance }} high memory usage"
+          description: "{{ $labels.instance }} memory usage is above 80% for the last 5 minutes."
