@@ -1,6 +1,7 @@
 groups:
   - name: example
     rules:
+    
       ## Memory Usage Alert
       - alert: HighMemoryUsage
         expr: node_memory_Active_bytes / node_memory_MemTotal_bytes * 100 > 80
@@ -10,6 +11,7 @@ groups:
         annotations:
           summary: "Instance {{ $labels.instance }} high memory usage"
           description: "{{ $labels.instance }} memory usage is above 80% for the last 5 minutes."
+          
       ## Disk Usage Alert
       - alert: HighDiskUsage
         expr: node_filesystem_free_bytes{fstype!="tmpfs"} / node_filesystem_size_bytes{fstype!="tmpfs"} * 100 < 20
@@ -19,6 +21,7 @@ groups:
         annotations:
           summary: "Instance {{ $labels.instance }} low disk space"
           description: "{{ $labels.instance }} has less than 20% disk space remaining for the last 5 minutes."
+          
       ## System Load Alert
       - alert: HighLoad
         expr: node_load1 > 2 * count(node_cpu_seconds_total{mode="system"})
