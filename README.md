@@ -34,39 +34,41 @@ Before starting the services, configure the following files:
 
 - Contains alert rules, such as alerts for high CPU usage.
 
-Alertmanager Configuration (alertmanager/alertmanager.yml)
+#### Alertmanager Configuration (alertmanager/alertmanager.yml)
 
-    Configures Alertmanager to send email alerts. Replace the SMTP settings and email addresses with your own.
+- Configures Alertmanager to send email alerts. Replace the SMTP settings and email addresses with your own.
 
-3. Start the Services ▶️
+### 3. Start the Services ▶️
 
 Use Docker Compose to start all the services:
 
-bash
-
+```bash
 docker-compose up -d
+```
 
-4. Access the Services 🌐
+### 4. Access the Services 🌐
 
-   Prometheus UI: http://localhost:9090 🖥️
-   Grafana UI: http://localhost:3000 (default credentials: admin/admin) 📊
-   Alertmanager UI: http://localhost:9093 ✉️
+- Prometheus UI: http://localhost:9090 🖥️
+- Grafana UI: http://localhost:3000 (default credentials: admin/admin) 📊
+- Alertmanager UI: http://localhost:9093 ✉️
 
-5. Configure Grafana 🛠️
+### 5. Configure Grafana 🛠️
 
-   Log in to Grafana at http://localhost:3000.
-   Add Prometheus as a data source:
-   Go to Configuration > Data Sources > Add data source.
-   Select Prometheus and set the URL to http://prometheus:9090.
-   Import a dashboard, such as the Node Exporter Full dashboard with ID 1860.
+1. Log in to Grafana at http://localhost:3000.
+2. Add Prometheus as a data source:
 
-Configuration Details 🔧
-Docker Compose File (docker-compose.yml)
+- Go to **Configuration** > **Data Sources** > **Add data source**.
+- Select **Prometheus** and set the URL to **`http://prometheus:9090`**.
+
+3. Import a dashboard, such as the **Node Exporter Full** dashboard with ID **`1860`**.
+
+## Configuration Details 🔧
+
+### Docker Compose File (docker-compose.yml)
 
 This file defines the services for Prometheus, Grafana, Node Exporter, and Alertmanager:
 
-yaml
-
+```bash
 version: '3'
 
 services:
@@ -98,11 +100,11 @@ ports: - "9093:9093"
 
 volumes:
 grafana-data:
+```
 
-Prometheus Configuration (prometheus/prometheus.yml)
+### Prometheus Configuration (prometheus/prometheus.yml)
 
-yaml
-
+```bash
 global:
 scrape_interval: 15s
 
@@ -123,11 +125,11 @@ alertmanagers: - static_configs: - targets: ['alertmanager:9093']
 rule_files:
 
 - "/etc/prometheus/alert.rules.yml"
+```
 
-Prometheus Alert Rules (prometheus/alert.rules.yml)
+### Prometheus Alert Rules (prometheus/alert.rules.yml)
 
-yaml
-
+```bash
 groups:
 
 - name: example
@@ -140,11 +142,11 @@ groups:
     annotations:
     summary: "Instance {{ $labels.instance }} high CPU usage"
     description: "{{ $labels.instance }} has CPU usage above 80% for the last 5 minutes."
+```
 
-Alertmanager Configuration (alertmanager/alertmanager.yml)
+### Alertmanager Configuration (alertmanager/alertmanager.yml)
 
-yaml
-
+```bash
 global:
 smtp_smarthost: 'smtp.example.com:587'
 smtp_from: 'alertmanager@example.com'
@@ -159,29 +161,34 @@ receivers:
 - name: 'email'
   email_configs:
   - to: 'your_email@example.com'
+```
 
 Replace the SMTP settings and email addresses with your own to enable email alerts.
-Customization 🛠️
+
+### Customization 🛠️
 
 You can customize the setup by:
 
-    Adding more services to monitor by modifying the prometheus.yml file.
-    Creating additional alert rules in alert.rules.yml.
-    Customizing Grafana dashboards according to your needs.
+- Adding more services to monitor by modifying the prometheus.yml file.
+- Creating additional alert rules in alert.rules.yml.
+- Customizing Grafana dashboards according to your needs.
 
-Stopping the Services ⏹️
+### Stopping the Services ⏹️
 
 To stop the services, run:
 
-bash
-
+```bash
 docker-compose down
+```
 
-License 📝
+### License 📝
 
 This project is licensed under the MIT License. See the LICENSE file for details.
-How to Use:
 
-    Copy and paste the content above into a README.md file in your repository.
-    Make sure to include the required configuration files (prometheus.yml, alert.rules.yml, alertmanager.yml) in the appropriate directories.
-    Customize as needed for your specific environment.
+### How to Use:
+
+1. Copy and paste the content above into a **`README.md`** file in your repository.
+2. Make sure to include the required configuration files (**`prometheus.yml`**, **`alert.rules.yml`**,**`alertmanager.yml`**) in the appropriate directories.
+3. Customize as needed for your specific environment.
+
+This **`README.md`** provides an overview, configuration details, and instructions for setting up the monitoring stack with Docker Compose, with the added touch of emojis to make the documentation more engaging and user-friendly.
