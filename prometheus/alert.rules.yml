@@ -19,3 +19,12 @@ groups:
         annotations:
           summary: "Instance {{ $labels.instance }} low disk space"
           description: "{{ $labels.instance }} has less than 20% disk space remaining for the last 5 minutes."
+      ## System Load Alert
+      - alert: HighLoad
+        expr: node_load1 > 2 * count(node_cpu_seconds_total{mode="system"})
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instance {{ $labels.instance }} high load"
+          description: "{{ $labels.instance }} has a load average greater than twice the number of CPU cores for the last 5 minutes."
