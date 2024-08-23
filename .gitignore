@@ -1,0 +1,31 @@
+# Ignore Docker-related files
+docker-compose.override.yml
+docker-compose.*.yml
+Dockerfile
+
+# Ignore Docker volumes and containers
+*/**/data/
+*/**/logs/
+*/**/tmp/
+
+# Grafana data storage (if using a volume)
+grafana-data/
+
+# Prometheus rule and configuration files backups
+prometheus/prometheus.yml.bak
+prometheus/alert.rules.yml.bak
+
+# Alertmanager backup config files
+alertmanager/alertmanager.yml.bak
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Ignore sensitive files
+.env
+.env.local
+.env.*.local
